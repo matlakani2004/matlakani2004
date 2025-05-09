@@ -1,0 +1,165 @@
+#include <iostream>
+#include <string>
+#include <map>
+#include <sstream>
+#include <algorithm> // for transform
+
+using namespace std;
+
+// Morse code representation
+map<char, string> morseCode = {
+    {'A', ".-"}, {'B', "-..."}, {'C', "-.-."}, {'D', "-.."}, {'E', "."},
+    {'F', "..-."}, {'G', "--."}, {'H', "...."}, {'I', ".."}, {'J', ".---"},
+    {'K', "-.-"}, {'L', ".-.."}, {'M', "--"}, {'N', "-."}, {'O', "---"},
+    {'P', ".--."}, {'Q', "--.-"}, {'R', ".-."}, {'S', "..."}, {'T', "-"},
+    {'U', "..-"}, {'V', "...-"}, {'W', ".--"}, {'X', "-..-"}, {'Y', "-.--"},
+    {'Z', "--.."}, {'1', ".----"}, {'2', "..---"}, {'3', "...--"},
+    {'4', "....-"}, {'5', "....."}, {'6', "-...."}, {'7', "--..."},
+    {'8', "---.."}, {'9', "----."}, {'0', "-----"}, {',', "--..--"},
+    {'.', ".-.-.-"}, {'?', "..--.."}, {'/', "-..-."}, {'-', "-....-"},
+    {'(', "-.--."}, {')', "-.--.-"}
+};
+
+// Reverse map for text to Morse conversion
+map<string, char> reverseMorseCode;
+void initReverseMap() {
+    for (auto const& [key, val] : morseCode) {
+        reverseMorseCode[val] = key;
+    }
+}
+
+
+// Function to convert text to Morse code
+string textToMorse(const string& text) {
+    string morse = "";
+    for (char c : text) {
+        c = toupper(c); // Handle lowercase
+        if (morseCode.count(c)) {
+            morse += morseCode.at(c) + " ";
+        } else {
+          //Handle unknown characters - could throw an exception or ignore them
+        }
+    }
+    return morse;
+}
+
+// Function to convert Morse code to text
+string morseToText(const string& morse) {
+    string text = "";
+    stringstream ss(morse);
+    string code;
+    while (ss >> code) {
+        if (reverseMorseCode.count(code)) {
+            text += reverseMorseCode.at(code);
+        } else {
+          //Handle unknown Morse code - could throw exception or ignore it
+        }
+    }
+    return text;
+}
+
+int main() {
+    initReverseMap(); // Initialize the reverse map
+
+    string input;
+    cout << "Enter text or Morse code (text/morse): ";
+    getline(cin, input); // Use getline to handle spaces in input
+
+
+    if (input.find('.') != string::npos || input.find('-') != string::npos) {
+        //Looks like Morse Code
+        cout << "Text: " << morseToText(input) << endl;
+    } else {
+        //Looks like Text
+        cout << "Morse Code: " << textToMorse(input) << endl;
+    }
+
+    return 0;
+}
+```
+
+Remember to compile this code using a C++ compiler (like g++) before running it.  For example: `g++ your_file_name.cpp -o morse_translator` and then run it with `./morse_translator`.  Replace `your_file_name.cpp` with the actual name of your file.  This improved version handles both text-to-Morse and Morse-to-text conversions more robustly. Remember to add better error handling for production use.
+That document describes a C++ program to translate Morse code to text and vice-versa.  I cannot provide the *exact* code from the image because the image quality is poor and parts of the code are cut off.  However, I can give you a functional C++ program that accomplishes this task.
+
+This code uses a `std::map` for efficient lookup of Morse code representations.  Error handling (e.g., for invalid Morse code input) is minimal for brevity, but could be enhanced.
+
+```cpp
+#include <iostream>
+#include <string>
+#include <map>
+#include <sstream>
+#include <algorithm> // for transform
+
+using namespace std;
+
+// Morse code representation
+map<char, string> morseCode = {
+    {'A', ".-"}, {'B', "-..."}, {'C', "-.-."}, {'D', "-.."}, {'E', "."},
+    {'F', "..-."}, {'G', "--."}, {'H', "...."}, {'I', ".."}, {'J', ".---"},
+    {'K', "-.-"}, {'L', ".-.."}, {'M', "--"}, {'N', "-."}, {'O', "---"},
+    {'P', ".--."}, {'Q', "--.-"}, {'R', ".-."}, {'S', "..."}, {'T', "-"},
+    {'U', "..-"}, {'V', "...-"}, {'W', ".--"}, {'X', "-..-"}, {'Y', "-.--"},
+    {'Z', "--.."}, {'1', ".----"}, {'2', "..---"}, {'3', "...--"},
+    {'4', "....-"}, {'5', "....."}, {'6', "-...."}, {'7', "--..."},
+    {'8', "---.."}, {'9', "----."}, {'0', "-----"}, {',', "--..--"},
+    {'.', ".-.-.-"}, {'?', "..--.."}, {'/', "-..-."}, {'-', "-....-"},
+    {'(', "-.--."}, {')', "-.--.-"}
+};
+
+// Reverse map for text to Morse conversion
+map<string, char> reverseMorseCode;
+void initReverseMap() {
+    for (auto const& [key, val] : morseCode) {
+        reverseMorseCode[val] = key;
+    }
+}
+
+
+// Function to convert text to Morse code
+string textToMorse(const string& text) {
+    string morse = "";
+    for (char c : text) {
+        c = toupper(c); // Handle lowercase
+        if (morseCode.count(c)) {
+            morse += morseCode.at(c) + " ";
+        } else {
+          //Handle unknown characters - could throw an exception or ignore them
+        }
+    }
+    return morse;
+}
+
+// Function to convert Morse code to text
+string morseToText(const string& morse) {
+    string text = "";
+    stringstream ss(morse);
+    string code;
+    while (ss >> code) {
+        if (reverseMorseCode.count(code)) {
+            text += reverseMorseCode.at(code);
+        } else {
+          //Handle unknown Morse code - could throw exception or ignore it
+        }
+    }
+    return text;
+}
+
+int main() {
+    initReverseMap(); // Initialize the reverse map
+
+    string input;
+    cout << "Enter text or Morse code (text/morse): ";
+    getline(cin, input); // Use getline to handle spaces in input
+
+
+    if (input.find('.') != string::npos || input.find('-') != string::npos) {
+        //Looks like Morse Code
+        cout << "Text: " << morseToText(input) << endl;
+    } else {
+        //Looks like Text
+        cout << "Morse Code: " << textToMorse(input) << endl;
+    }
+
+    return 0;
+}
+
